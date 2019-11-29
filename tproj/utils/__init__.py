@@ -49,6 +49,7 @@ def ensure_dir_exist(path: Union[str, Path]):
     if isinstance(path, str):
         path = Path(path)
     if not path.exists():
+        print("create directory: {}".format(path.absolute().as_posix()))
         path.mkdir(parents=True)
 
 
@@ -59,6 +60,7 @@ def ensure_file_exist(path: Union[str, Path]):
         path = Path(path)
     if not path.exists():
         ensure_dir_exist(path.parent)
+        print("create file: {}".format(path.absolute().as_posix()))
         path.touch()
 
 
