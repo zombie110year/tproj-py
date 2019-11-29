@@ -15,6 +15,7 @@ import yaml
 __all__ = (
     "get_tproj_home",
     "get_template_dir",
+    "get_templates",
     "ensure_dir_exist",
     "ensure_file_exist",
     "create_mem_zip",
@@ -106,6 +107,12 @@ def create_mem_zip(files: List[Path]) -> bytes:
     buffer.seek(0)
     data = buffer.read()
     return data
+
+
+def get_templates() -> List[Path]:
+    # public
+    template_dir = get_template_dir()
+    return list(template_dir.glob("*.zip"))
 
 
 def get_default_tproj_home() -> Path:
