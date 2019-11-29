@@ -37,7 +37,7 @@ tproj 提供名为 tproj 的可执行文件，可以：根据当前目录内容�
 
 除此之外还提供以下参数：
 
-- `-n/--name` 直接在命令行参数中指定归档名
+- `-n/--name` 直接在命令行参数中指定归档名（将会覆盖 tproj.cfg 中的设置）
 - `-f/--force` 覆盖同名归档（默认取消创建）
 
 <!-- TODO
@@ -46,6 +46,9 @@ tproj 提供名为 tproj 的可执行文件，可以：根据当前目录内容�
 - `--ignorefile` 与 `--exclude` 作用相同，但从文件中读取规则，文件采用和 gitignore 相同的语法
   - 如果 `--ignorefile` 与 `--exclude` 同时使用，最后的应用的规则会取并集
 -->
+
+这要求在项目的根目录下存在一个名为 `tproj.cfg` 的文件，在这个文件中定义此模板的相关参数。
+可配置的各键值对参考 [tproj.cfg](#tproj.cfg).
 
 示例
 
@@ -104,3 +107,23 @@ tproj 的所有数据文件都保存在特定的目录中，将这个目录所�
 除了用 `tproj create -n ...` 来创建之外，也可以使用你喜欢的任何压缩工具来打包。
 项目所需的文件原样存储在归档的 "根目录" 中，并在应用时原样解压到当前工作目录或
 `tproj apply -d ...` 指定的目录中。
+
+### tproj.yml
+
+|   键    |   类型    |  默认值  | 含义                      |
+| :-----: | :-------: | :------: | ------------------------- |
+|  name   |    str    |   `""`   | 此模板的名字              |
+| author  |    str    |   `""`   | 模板的作者，`name<email>` |
+| include | List[str] | `["**"]` | 默认包含所有文件、子目录  |
+
+示例
+
+```yaml
+name: "helloworld"
+author: "zombie110year<zombie110year@outlook.com>"
+include:
+    - "README.md"
+    - ".gitignore"
+    - "src/**"
+    - "tests/**"
+```
