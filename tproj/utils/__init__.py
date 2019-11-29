@@ -2,11 +2,13 @@
 """
 import os
 import sys
+from io import BytesIO
 from pathlib import Path
+from typing import List
 from typing import Union
 from warnings import warn
-
-from typing import Union
+from zipfile import ZIP_DEFLATED
+from zipfile import ZipFile
 
 import yaml
 
@@ -15,6 +17,7 @@ __all__ = (
     "get_template_dir",
     "ensure_dir_exist",
     "ensure_file_exist",
+    "create_mem_zip",
 )
 
 
@@ -89,6 +92,20 @@ def parse_cfg(conf_text: Union[str, None]) -> dict:
             if k in config.keys():
                 default[k] = config.get(k)
         return default
+
+
+def create_mem_zip(files: List[Path]) -> bytes:
+    # public
+    """在内存中创建一个 zipfile
+    """
+    buffer = BytesIO()
+    zf = ZipFile(buffer, "w", ZIP_DEFLATED)
+    for file in files:
+        zf.write(file.as_posix())
+    zf.close()
+    buffer.seek(0)
+    data = buffer.read()
+    return data
 
 
 def get_default_tproj_home() -> Path:
