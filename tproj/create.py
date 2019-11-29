@@ -32,9 +32,13 @@ def create_main(name: Union[str, NoneType], src: str, force: bool):
 
     files = read_src_dir(src_path, cfg.get("include"))
 
-def read_src_dir(src: Path, include: List[str], exclude: List[str]) -> List[Path]:
+
+def read_src_dir(src: Path, include: List[str]) -> List[Path]:
     """递归地读取源目录中所有文件
 
     :param src: 源目录
+    :param include: 要包含的文件，可以使用通配符
     """
-    include_files = sum([list(filter(lambda x: x.is_file(), src.glob(pat))) for pat in include], [])
+    include_files = sum(
+        [list(filter(lambda x: x.is_file(), src.glob(pat))) for pat in include], [])
+    return include_files
