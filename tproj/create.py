@@ -41,4 +41,4 @@ def read_src_dir(src: Path, include: List[str]) -> List[Path]:
     """
     include_files = sum(
         [list(filter(lambda x: x.is_file(), src.glob(pat))) for pat in include], [])
-    return include_files
+    return list(set(include_files))
