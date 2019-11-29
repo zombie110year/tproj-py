@@ -2,6 +2,10 @@
 """
 import argparse
 
+from .apply import apply_main
+from .create import create_main
+from .ls import ls_main
+
 __all__ = (
     "get_tproj_argparser",
 )
@@ -32,3 +36,15 @@ def get_tproj_argparser():
                         action="store_true")
 
     return parser
+
+
+def main():
+    "程序入口"
+    args = get_tproj_argparser().parse_args()
+
+    if args.subcmd == "apply":
+        apply_main(args.name, args.out_dir)
+    elif args.subcmd == "create":
+        create_main(args.name, ".", args.force)
+    elif args.subcmd == "ls":
+        ls_main()
