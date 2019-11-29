@@ -116,6 +116,12 @@ def get_templates() -> List[Path]:
     template_dir = get_template_dir()
     return list(template_dir.glob("*.zip"))
 
+def extract_zip(src: Path, out_dir: Path):
+    # public
+    """解压 zip 包到 out_dir
+    """
+    zf = ZipFile(src, "r", compression=ZIP_DEFLATED)
+    zf.extractall(out_dir)
 
 def extract_zip(src: Path, out_dir: Path):
     # public
