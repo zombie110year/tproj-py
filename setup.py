@@ -10,7 +10,7 @@ setup(
     classifiers=[
         "Environment :: Console",
         "License :: OSI Approved :: MIT License",
-        "Operating System :: Mircrosoft :: Windows",
+        "Operating System :: Microsoft :: Windows",
         "Operating System :: POSIX",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.7",
