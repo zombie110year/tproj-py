@@ -58,7 +58,7 @@ def ensure_file_exist(path: Union[str, Path]):
         path.touch()
 
 
-def parse_cfg(conf_text: Union[str, NoneType]) -> dict:
+def parse_cfg(conf_text: Union[str, None]) -> dict:
     """解析创建模板归档的配置文件
 
     |   键    |   类型    |     默认值      | 含义                      |

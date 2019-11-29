@@ -14,7 +14,7 @@ __all__ = (
 )
 
 
-def create_main(name: Union[str, NoneType], src: str, force: bool):
+def create_main(name: Union[str, None], src: str, force: bool):
     """根据当前工作目录的内容创建模板归档
 
     :param str name: 命令行传入的模板归档的命名
