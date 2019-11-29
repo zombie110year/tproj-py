@@ -6,6 +6,8 @@ from pathlib import Path
 from typing import Union
 from warnings import warn
 
+from typing import Union
+
 import yaml
 
 __all__ = (
@@ -56,7 +58,7 @@ def ensure_file_exist(path: Union[str, Path]):
         path.touch()
 
 
-def parse_cfg(conf_text: str) -> dict:
+def parse_cfg(conf_text: Union[str, NoneType]) -> dict:
     """解析创建模板归档的配置文件
 
     |   键    |   类型    |  默认值  | 含义                      |
@@ -65,7 +67,7 @@ def parse_cfg(conf_text: str) -> dict:
     | author  |    str    |   `""`   | 模板的作者，`name<email>` |
     | include | List[str] | `["**"]` | 默认包含所有文件、子目录  |
 
-    :param conf_path: 配置文件的路径
+    :param conf_text: 配置文件的内容
     """
     default = {
         "name": "",
@@ -74,12 +76,15 @@ def parse_cfg(conf_text: str) -> dict:
             "**"
         ]
     }
-    config = yaml.load(conf_text, Loader=yaml.SafeLoader)
-    assert isinstance(config, dict)
-    for k in default.keys():
-        if k in config.keys():
-            default[k] = config.get(k)
-    return default
+    if conf_text is None:
+        return default
+    else:
+        config = yaml.load(conf_text, Loader=yaml.SafeLoader)
+        assert isinstance(config, dict)
+        for k in default.keys():
+            if k in config.keys():
+                default[k] = config.get(k)
+        return default
 
 
 def get_default_tproj_home() -> Path:
