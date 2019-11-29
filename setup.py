@@ -21,8 +21,8 @@ setup(
             "tproj = tproj.cli:main",
         ],
     },
-    requires=[
-        "pyyaml"
+    install_requires=[
+        "pyyaml>=5.0"
     ],
     license="MIT",
     long_description=Path("README.md").read_text("utf-8"),

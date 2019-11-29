@@ -13,7 +13,7 @@ cd tproj-py && python setup.py install
 - 通过 pip 安装
 
 ```sh
-pip install tproj-py
+pip install tproj-zombie110year
 ```
 
 - 通过 pipx 安装
@@ -22,7 +22,7 @@ pip install tproj-py
 它会创建独立的虚拟环境，不会污染当前 Python 环境。
 
 ```sh
-pipx install tproj-py
+pipx install tproj-zombie110year
 ```
 
 ## usage
