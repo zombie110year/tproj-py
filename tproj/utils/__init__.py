@@ -61,11 +61,12 @@ def ensure_file_exist(path: Union[str, Path]):
 def parse_cfg(conf_text: Union[str, NoneType]) -> dict:
     """解析创建模板归档的配置文件
 
-    |   键    |   类型    |  默认值  | 含义                      |
-    | :-----: | :-------: | :------: | ------------------------- |
-    |  name   |    str    |   `""`   | 此模板的名字              |
-    | author  |    str    |   `""`   | 模板的作者，`name<email>` |
-    | include | List[str] | `["**"]` | 默认包含所有文件、子目录  |
+    |   键    |   类型    |     默认值      | 含义                      |
+    | :-----: | :-------: | :-------------: | ------------------------- |
+    |  name   |    str    |      `""`       | 此模板的名字              |
+    | author  |    str    |      `""`       | 模板的作者，`name<email>` |
+    | include | List[str] |   `["**/*"]`    | 默认包含所有文件、子目录  |
+    | exclude | List[str] | `[".git/**/*"]` | 被排除的文件              |
 
     :param conf_text: 配置文件的内容
     """
@@ -73,7 +74,10 @@ def parse_cfg(conf_text: Union[str, NoneType]) -> dict:
         "name": "",
         "author": "",
         "include": [
-            "**"
+            "**/*"
+        ],
+        "exclude": [
+            ".git/**/*"
         ]
     }
     if conf_text is None:
