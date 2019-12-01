@@ -2,6 +2,7 @@
 """
 import argparse
 
+from . import __version__
 from .apply import apply_main
 from .create import create_main
 from .ls import ls_main
@@ -14,6 +15,7 @@ __all__ = (
 def get_tproj_argparser():
     "获取本程序的命令行参数解析器"
     parser = argparse.ArgumentParser("tproj")
+    parser.add_argument("--version", action="version", version=__version__)
     subcmd = parser.add_subparsers(dest="subcmd")
 
     apply = subcmd.add_parser("apply")
