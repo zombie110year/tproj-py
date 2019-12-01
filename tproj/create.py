@@ -23,28 +23,29 @@ def create_main(name: Union[str, None], src: str, force: bool):
     :param str src: 要打包的目录
     :param bool force: 是否强制覆写已存在的同名归档
     """
+    src_path = Path(src)
+    cfg = read_cfg(src)
+    name = cfg.get("name")
     zf_file = Path(get_template_dir() / "{}.zip".format(name))
-    if not force:
-        overwrite = input(
-            "there is a exsiting template named {}, overwrite? [y/n] ").strip().startswith("y")
-    else:
-        overwrite = force
-
-    if overwrite:
-
-        src_path = Path(src)
-        cfg_path = Path(src_path / "tproj.yml")
-        if cfg_path.exists():
-            cfg = parse_cfg(cfg_path.read_text())
+    if zf_file.exists():
+        if not force:
+            confirm_text = "there is a exsiting template named {}, overwrite? [y/n] ".format(
+            zf_file.stem)
+            will_write = input(confirm_text).strip().startswith("y")
         else:
-            cfg = parse_cfg(None)
-        if cfg.get("name") == "":
-            name = input("Template Name: ").strip()
+            will_write = False
+    else:
+        will_write = True
+
+    if will_write:
 
         files = read_src_dir(src_path, cfg.get("include"))
         zf_content = create_mem_zip(files)
         zf_file.write_bytes(zf_content)
         print("template saved at {}".format(zf_file.as_posix()))
+
+    else:
+        print("did'nt do anything")
 
 
 def read_src_dir(src: Path, include: List[str]) -> List[Path]:
@@ -56,3 +57,19 @@ def read_src_dir(src: Path, include: List[str]) -> List[Path]:
     include_files = sum(
         [list(filter(lambda x: x.is_file(), src.glob(pat))) for pat in include], [])
     return list(set(include_files))
+
+
+def read_cfg(src: str) -> dict:
+    src_path = Path(src)
+    cfg_path = Path(src_path / "tproj.yml")
+    if cfg_path.exists():
+        cfg_content = cfg_path.read_text()
+        cfg = parse_cfg(cfg_content)
+        print(cfg_content)
+    else:
+        cfg = parse_cfg(None)
+    if cfg.get("name") == "":
+        name = input("Template Name: ").strip()
+        cfg["name"] = name
+
+    return cfg
