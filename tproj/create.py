@@ -33,7 +33,7 @@ def create_main(name: Union[str, None], src: str, force: bool):
             zf_file.stem)
             will_write = input(confirm_text).strip().startswith("y")
         else:
-            will_write = False
+            will_write = True
     else:
         will_write = True
 
